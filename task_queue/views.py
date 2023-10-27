@@ -8,7 +8,7 @@ from .models import Task
 from .forms import TaskForm
 import redis
 from celery import celery
-
+from django.shortcuts import render
 def submit_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -68,3 +68,6 @@ def submit_task(request):
                     form = TaskForm()
 
                 return render(request, 'taskqueue/submit_task.html', {'form': form})
+def task_list(request):
+    tasks = Task.objects.all()
+    return render(request, 'taskqueue/task_list.html', {'tasks': tasks})
