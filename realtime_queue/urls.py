@@ -17,7 +17,7 @@ Including another URLconf
 import debug_toolbar
 from django.contrib import admin
 from django.urls import path, include 
-
+from task_queue import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('submit-task/', include('task_queue.urls'), name='submit-task'),

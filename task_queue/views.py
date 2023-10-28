@@ -7,8 +7,10 @@ from django.shortcuts import render, redirect
 from .models import Task
 from .forms import TaskForm
 import redis
-from celery import celery
+from celery import Celery
 from django.shortcuts import render
+from rest_framework import generics
+from .serializers import TaskSerializer
 
 def submit_task(request):
     if request.method == 'POST':
@@ -37,8 +39,8 @@ def task_list(request):
     return render(request, 'task_queue/task_list.html', {'tasks': tasks})
 class TaskList(generics.ListCreateAPIView):
     queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+    serializer_class = TaskSerializer()
 
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+    serializer_class = TaskSerializer()
